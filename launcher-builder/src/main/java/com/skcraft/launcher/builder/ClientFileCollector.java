@@ -12,11 +12,17 @@ import com.google.common.io.Files;
 import com.skcraft.launcher.model.modpack.FileInstall;
 import com.skcraft.launcher.model.modpack.Manifest;
 import lombok.NonNull;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.extern.java.Log;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.logging.Level;
 
 /**
  * Walks a path and adds hashed path versions to the given
@@ -49,13 +55,41 @@ public class ClientFileCollector extends DirectoryWalker {
         return getDirectoryBehavior(name);
     }
 
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    private static class FileEntry {
+    	final File file;
+    	final String relPath;
+    }
+
+    private final ArrayList<FileEntry> fileEntries = new ArrayList<>();
+
     @Override
     protected void onFile(File file, String relPath) throws IOException {
         if (file.getName().endsWith(FileInfoScanner.FILE_SUFFIX)
                 || file.getName().endsWith(FileUrlScanner.URL_FILE_SUFFIX)) {
             return;
         }
+        fileEntries.add(new FileEntry(file, relPath));
+    }
 
+    @Override
+    protected void onWalkComplete() {
+    	long start = System.currentTimeMillis();
+    	fileEntries.parallelStream().forEach(fileEntry -> {
+    		try {
+				addFile(fileEntry.file, fileEntry.relPath);
+			} catch (IOException e) {
+				log.log(Level.SEVERE, "Error processing file.", e);
+				throw new RuntimeException(e);
+			}
+    	});
+    	long stop = System.currentTimeMillis();
+    	log.info("Finished processing " + fileEntries.size() + " files in " + (stop - start) + "ms.");
+    	fileEntries.clear();
+    }
+
+    private void addFile(File file, String relPath) throws IOException {
         FileInstall entry = new FileInstall();
         String hash = Files.hash(file, hf).toString();
         String to = FilenameUtils.separatorsToUnix(FilenameUtils.normalize(relPath));

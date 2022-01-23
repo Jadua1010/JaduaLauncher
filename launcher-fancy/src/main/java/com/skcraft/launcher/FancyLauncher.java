@@ -16,6 +16,16 @@ import java.util.logging.Level;
 
 @Log
 public class FancyLauncher {
+	
+	public static void setUIFont (javax.swing.plaf.FontUIResource f){
+    java.util.Enumeration keys = UIManager.getDefaults().keys();
+    while (keys.hasMoreElements()) {
+      Object key = keys.nextElement();
+      Object value = UIManager.get (key);
+      if (value instanceof javax.swing.plaf.FontUIResource)
+        UIManager.put (key, f);
+      }
+    } 
 
     public static void main(final String[] args) {
         Launcher.setupLogger();
@@ -27,10 +37,14 @@ public class FancyLauncher {
                     Thread.currentThread().setContextClassLoader(FancyLauncher.class.getClassLoader());
                     UIManager.getLookAndFeelDefaults().put("ClassLoader", FancyLauncher.class.getClassLoader());
                     UIManager.getDefaults().put("SplitPane.border", BorderFactory.createEmptyBorder());
+					setUIFont (new javax.swing.plaf.FontUIResource("Cabin",Font.PLAIN,12));
                     JFrame.setDefaultLookAndFeelDecorated(true);
                     JDialog.setDefaultLookAndFeelDecorated(true);
                     System.setProperty("sun.awt.noerasebackground", "true");
-                    System.setProperty("substancelaf.windowRoundedCorners", "false");
+                    System.setProperty("substancelaf.windowRoundedCorners", "true");
+					System.setProperty("awt.useSystemAAFontSettings","on");
+					System.setProperty("Dawt.useSystemAAFontSettings","on");
+					System.setProperty("swing.aatext", "true");
 
                     if (!SwingHelper.setLookAndFeel("com.skcraft.launcher.skin.LauncherLookAndFeel")) {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -62,4 +76,14 @@ public class FancyLauncher {
         }
     }
 
+	public class CustomTextArea extends JTextArea {
+
+		@Override
+		public void paintComponent(Graphics g) {
+			Graphics2D g2 = (Graphics2D) g.create();
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			super.paint(g);
+		}
+
+	}
 }

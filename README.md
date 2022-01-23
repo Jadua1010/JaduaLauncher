@@ -1,7 +1,5 @@
-SKCraft Launcher
+Jadua Studios + SKCraft Launcher
 ================
-
-![Now with 1.13+ support!](readme/now_with_support.png)
 
 [![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/offbeatwitch/donate)
 

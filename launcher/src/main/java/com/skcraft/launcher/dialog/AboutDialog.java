@@ -30,15 +30,15 @@ public class AboutDialog extends JDialog {
         container.setLayout(new MigLayout("insets dialog"));
 
         container.add(new JLabel("<html>Licensed under GNU General Public License, version 3."), "wrap, gapbottom unrel");
-        container.add(new JLabel("<html>You are using SKCraft Launcher, an open-source customizable<br>" +
-                "launcher platform that anyone can use."), "wrap, gapbottom unrel");
-        container.add(new JLabel("<html>SKCraft does not necessarily endorse the version of<br>" +
-                "the launcher that you are using."), "wrap, gapbottom unrel");
+        container.add(new JLabel("<html>You are using Jadua Launcher, a branch of the SKCraft<br>" +
+                "launcher platform that is available online."), "wrap, gapbottom unrel");
 
         JButton okButton = new JButton("OK");
-        JButton sourceCodeButton = new JButton("Website");
+		JButton websiteButton = new JButton("Website");
+        JButton sourceCodeButton = new JButton("Code");
 
         container.add(sourceCodeButton, "span, split 3, sizegroup bttn");
+		 container.add(websiteButton, "span, split 3, sizegroup bttn");
         container.add(okButton, "tag ok, sizegroup bttn");
 
         add(container, BorderLayout.CENTER);
@@ -48,6 +48,7 @@ public class AboutDialog extends JDialog {
 
         okButton.addActionListener(ActionListeners.dispose(this));
         sourceCodeButton.addActionListener(ActionListeners.openURL(this, "https://github.com/SKCraft/Launcher"));
+		websiteButton.addActionListener(ActionListeners.openURL(this, "http://jaduastudios.com"));
     }
 
     public static void showAboutDialog(Window parent) {

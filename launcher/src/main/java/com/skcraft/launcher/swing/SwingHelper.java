@@ -112,8 +112,7 @@ public final class SwingHelper {
             log.log(Level.WARNING, "Malformed URL; this is a programming error!", e);
         }
     }
-
-    public static void openURL(URI url) throws IOException {
+	public static void openURL(URI url) throws IOException {
         try {
             Desktop.getDesktop().browse(url);
         } catch (UnsupportedOperationException e) {

@@ -37,7 +37,7 @@ public class FancyLauncher {
                     Thread.currentThread().setContextClassLoader(FancyLauncher.class.getClassLoader());
                     UIManager.getLookAndFeelDefaults().put("ClassLoader", FancyLauncher.class.getClassLoader());
                     UIManager.getDefaults().put("SplitPane.border", BorderFactory.createEmptyBorder());
-					setUIFont (new javax.swing.plaf.FontUIResource("Cabin",Font.PLAIN,12));
+					setUIFont (new javax.swing.plaf.FontUIResource("Sans Serif",Font.PLAIN,12));
                     JFrame.setDefaultLookAndFeelDecorated(true);
                     JDialog.setDefaultLookAndFeelDecorated(true);
                     System.setProperty("sun.awt.noerasebackground", "true");

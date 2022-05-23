@@ -1,10 +1,13 @@
 plugins {
     id 'application'
+    id 'java-library'
     id "com.github.johnrengelman.shadow"
     id 'io.freefair.lombok'
 }
 
-mainClassName = "com.skcraft.launcher.Launcher"
+application {
+    mainClassName = "com.skcraft.launcher.Launcher"
+}
 
 dependencies {
     api 'javax.xml.bind:jaxb-api:2.3.1'
@@ -15,8 +18,9 @@ dependencies {
     api 'com.beust:jcommander:1.82'
     api 'com.miglayout:miglayout:3.7.4'
     api 'com.google.code.findbugs:jsr305:3.0.2'
-	
-    implementation 'net.java.dev.jna:jna-platform:5.10.0'
+
+    implementation 'com.googlecode.plist:dd-plist:1.23'
+    implementation 'net.java.dev.jna:jna-platform:5.11.0'
 }
 
 processResources {
@@ -28,6 +32,9 @@ processResources {
 }
 
 shadowJar {
+    archiveClassifier.set("")
 }
 
-build.dependsOn(shadowJar)
+build {
+    dependsOn(shadowJar)
+}

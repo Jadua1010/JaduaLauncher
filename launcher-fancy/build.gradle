@@ -18,6 +18,8 @@ repositories {
 dependencies {
     implementation project(path: ':launcher')
     implementation 'io.github.cottonmc.insubstantial:substance:7.3.1-SNAPSHOT'
+	implementation 'com.formdev:flatlaf:2.6'
+	implementation 'com.formdev:flatlaf-intellij-themes:2.6'
 }
 
 shadowJar {

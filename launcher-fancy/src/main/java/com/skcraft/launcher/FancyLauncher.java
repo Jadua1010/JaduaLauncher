@@ -9,6 +9,7 @@ package com.skcraft.launcher;
 import com.google.common.base.Supplier;
 import com.skcraft.launcher.swing.SwingHelper;
 import lombok.extern.java.Log;
+import com.skcraft.launcher.dialog.LauncherFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,8 @@ public class FancyLauncher {
 
     public static void main(final String[] args) {
         Launcher.setupLogger();
+        System.setProperty( "apple.awt.application.name", "Jadua Studios Client" );
+        System.setProperty( "apple.awt.application.appearance", "system" );
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -45,7 +48,7 @@ public class FancyLauncher {
                     System.setProperty("substancelaf.windowRoundedCorners", "true");
 					System.setProperty("awt.useSystemAAFontSettings","on");
 					System.setProperty("swing.aatext", "true");
-
+                                        
                     if (!SwingHelper.setLookAndFeel("com.skcraft.launcher.skin.LauncherLookAndFeel")) {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     }

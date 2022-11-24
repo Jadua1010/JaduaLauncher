@@ -21,6 +21,7 @@ dependencies {
 
     implementation 'com.googlecode.plist:dd-plist:1.23'
     implementation 'net.java.dev.jna:jna-platform:5.11.0'
+    implementation 'com.formdev:flatlaf:2.6'
 }
 
 processResources {

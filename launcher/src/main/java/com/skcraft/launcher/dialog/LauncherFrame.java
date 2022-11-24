@@ -6,6 +6,7 @@
 
 package com.skcraft.launcher.dialog;
 
+import com.formdev.flatlaf.util.SystemInfo;
 import com.skcraft.concurrency.ObservableFuture;
 import com.skcraft.launcher.Instance;
 import com.skcraft.launcher.InstanceList;
@@ -24,6 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,7 +43,7 @@ import static com.skcraft.launcher.util.SharedLocale.tr;
 @Log
 public class LauncherFrame extends JFrame {
 
-    private final Launcher launcher;
+    public final Launcher launcher;
 
     @Getter
     private final InstanceTable instancesTable = new InstanceTable();
@@ -74,6 +76,14 @@ public class LauncherFrame extends JFrame {
         setLocationRelativeTo(null);
 
         SwingHelper.setFrameIcon(this, Launcher.class, "icon.png");
+        getRootPane().putClientProperty( "apple.awt.fullWindowContent", true );
+        getRootPane().putClientProperty( "apple.awt.transparentTitleBar", true );
+        try {
+            getRootPane().putClientProperty( "apple.awt.windowTitleVisible", false );
+        }
+        catch(Throwable t) {
+            setTitle( null );
+        }
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -83,7 +93,7 @@ public class LauncherFrame extends JFrame {
         });
     }
 
-    private void initComponents() {
+    public void initComponents() {
         JPanel container = createContainerPanel();
         container.setLayout(new MigLayout("fill, insets dialog", "[][]push[][]", "[grow][]"));
 
@@ -114,6 +124,10 @@ public class LauncherFrame extends JFrame {
         container.add(selfUpdateButton);
         container.add(optionsButton);
         container.add(launchButton);
+        
+        if( SystemInfo.isMacOS) {
+            container.setBorder(new EmptyBorder(new Insets(20, 0, 0, 0)));
+        }
 
         add(container, BorderLayout.CENTER);
 

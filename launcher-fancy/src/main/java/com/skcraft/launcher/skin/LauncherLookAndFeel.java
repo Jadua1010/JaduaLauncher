@@ -8,6 +8,8 @@ package com.skcraft.launcher.skin;
 import com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import com.skcraft.launcher.dialog.LauncherFrame;
 
 public class LauncherLookAndFeel extends FlatOneDarkIJTheme {
 
@@ -26,12 +28,14 @@ public class LauncherLookAndFeel extends FlatOneDarkIJTheme {
         UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
         UIManager.put( "ScrollBar.width", 15 );
         UIManager.put( "TitlePane.foreground", new Color( 225, 231, 240 ) );
-        UIManager.put( "JScrollPane.smoothScrolling", true );
+        UIManager.put( "ScrollPane.smoothScrolling", true );
         UIManager.put( "Table.arc", 100 );
         UIManager.put( "Table.selectionBackground", new Color(0x444953) );
         UIManager.put( "Table.selectionInactiveBackground", new Color(0x444953) );
         UIManager.put( "Table.focusCellBackground", new Color(0x444953) );
         UIManager.put( "Table.background", new Color(0x0021242B, true) );
         UIManager.put( "Table.showHorizontalLines", true );
+
+        
     }
 }

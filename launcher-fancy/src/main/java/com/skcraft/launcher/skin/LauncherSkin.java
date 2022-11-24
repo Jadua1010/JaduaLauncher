@@ -59,7 +59,7 @@ public class LauncherSkin extends GraphiteSkin {
 
         scheme.registerColorScheme(tabHighlightScheme, ColorSchemeAssociationKind.TAB, ComponentState.ROLLOVER_SELECTED);
 
-        this.registerDecorationAreaSchemeBundle(scheme, backgroundScheme, DecorationAreaType.NONE);
+       this.registerDecorationAreaSchemeBundle(scheme, backgroundScheme, DecorationAreaType.NONE);
 
         this.setSelectedTabFadeStart(0.1);
         this.setSelectedTabFadeEnd(0.3);

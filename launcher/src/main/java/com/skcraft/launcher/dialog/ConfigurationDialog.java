@@ -36,7 +36,7 @@ public class ConfigurationDialog extends JDialog {
     private final JPanel tabContainer = new JPanel(new BorderLayout());
     private final JTabbedPane tabbedPane = new JTabbedPane();
     private final FormPanel javaSettingsPanel = new FormPanel();
-    private final JComboBox<JavaRuntime> jvmRuntime = new BetterComboBox<>();
+    private final JComboBox<JavaRuntime> jvmRuntime = new JComboBox<>();
     private final JTextField jvmArgsText = new JTextField();
     private final JSpinner minMemorySpinner = new JSpinner();
     private final JSpinner maxMemorySpinner = new JSpinner();

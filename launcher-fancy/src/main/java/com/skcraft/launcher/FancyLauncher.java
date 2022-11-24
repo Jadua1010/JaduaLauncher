@@ -37,13 +37,13 @@ public class FancyLauncher {
                     Thread.currentThread().setContextClassLoader(FancyLauncher.class.getClassLoader());
                     UIManager.getLookAndFeelDefaults().put("ClassLoader", FancyLauncher.class.getClassLoader());
                     UIManager.getDefaults().put("SplitPane.border", BorderFactory.createEmptyBorder());
-					setUIFont (new javax.swing.plaf.FontUIResource("Sans Serif",Font.PLAIN,12));
+					setUIFont (new javax.swing.plaf.FontUIResource("Futura",Font.PLAIN,12));
                     JFrame.setDefaultLookAndFeelDecorated(true);
                     JDialog.setDefaultLookAndFeelDecorated(true);
+                    System.setProperty( "flatlaf.animation", "true" );
                     System.setProperty("sun.awt.noerasebackground", "true");
                     System.setProperty("substancelaf.windowRoundedCorners", "true");
 					System.setProperty("awt.useSystemAAFontSettings","on");
-					System.setProperty("Dawt.useSystemAAFontSettings","on");
 					System.setProperty("swing.aatext", "true");
 
                     if (!SwingHelper.setLookAndFeel("com.skcraft.launcher.skin.LauncherLookAndFeel")) {

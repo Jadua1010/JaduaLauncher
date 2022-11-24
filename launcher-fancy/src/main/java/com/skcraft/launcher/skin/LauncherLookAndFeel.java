@@ -5,12 +5,33 @@
  */
 
 package com.skcraft.launcher.skin;
+import com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme;
+import java.awt.*;
+import javax.swing.*;
 
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-
-public class LauncherLookAndFeel extends SubstanceLookAndFeel {
+public class LauncherLookAndFeel extends FlatOneDarkIJTheme {
 
     public LauncherLookAndFeel() {
-        super(new LauncherSkin());
+        FlatOneDarkIJTheme.registerCustomDefaultsSource("com.skcraft.launcher.skin");
+        FlatOneDarkIJTheme.setup();
+        
+        UIManager.put( "Button.arc", 100 );
+        UIManager.put( "Component.arc", 100 );
+        UIManager.put( "ProgressBar.arc", 100 );
+        UIManager.put( "TextComponent.arc", 100 );
+        UIManager.put( "Button.margin", new Insets(10, 15, 10, 15) );
+        UIManager.put( "Button.minimumWidth", 100);
+        UIManager.put( "Component.arrowType", "chevron" );
+        UIManager.put( "ScrollBar.thumbArc", 999 );
+        UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
+        UIManager.put( "ScrollBar.width", 15 );
+        UIManager.put( "TitlePane.foreground", new Color( 225, 231, 240 ) );
+        UIManager.put( "JScrollPane.smoothScrolling", true );
+        UIManager.put( "Table.arc", 100 );
+        UIManager.put( "Table.selectionBackground", new Color(0x444953) );
+        UIManager.put( "Table.selectionInactiveBackground", new Color(0x444953) );
+        UIManager.put( "Table.focusCellBackground", new Color(0x444953) );
+        UIManager.put( "Table.background", new Color(0x0021242B, true) );
+        UIManager.put( "Table.showHorizontalLines", true );
     }
 }

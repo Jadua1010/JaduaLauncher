@@ -27,7 +27,7 @@ jobs:
       with:
         version-source: file
         version-file: build.gradle
-        version-file-extraction-pattern: "(?<=version = ').+[^']"
+        version-file-extraction-pattern: "(?<=version = ').[^']+"
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:

@@ -31,6 +31,9 @@ jobs:
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
-        files: ./*/build/libs/*.jar
+        files: |
+          ./launcher-fancy/build/libs/*.jar
+          ./creator-tools/build/libs/*.jar
+          ./launcher-bootstrap/build/libs/*.jar
         tag_name: ${{ env.RELEASE_VERSION }}
         generate_release_notes: true

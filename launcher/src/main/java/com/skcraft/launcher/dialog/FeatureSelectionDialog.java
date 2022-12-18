@@ -78,7 +78,9 @@ public class FeatureSelectionDialog extends JDialog {
         add(descLabel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.SOUTH);
-
+        
+        componentsTable.setOpaque(false);
+        
         componentsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 updateDescription();

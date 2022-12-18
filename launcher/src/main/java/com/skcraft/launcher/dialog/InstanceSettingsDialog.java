@@ -27,7 +27,7 @@ public class InstanceSettingsDialog extends JDialog {
 
 	private final JCheckBox enableCustomRuntime = new JCheckBox(SharedLocale.tr("instance.options.customJava"));
 	private final FormPanel runtimePanel = new FormPanel();
-	private final JComboBox<JavaRuntime> javaRuntimeBox = new BetterComboBox<>();
+	private final JComboBox<JavaRuntime> javaRuntimeBox = new JComboBox<>();
 	private final JTextField javaArgsBox = new JTextField();
 
 	private final LinedBoxPanel buttonsPanel = new LinedBoxPanel(true);
@@ -60,7 +60,6 @@ public class InstanceSettingsDialog extends JDialog {
 		runtimePanel.addRow(new JLabel(SharedLocale.tr("options.jvmRuntime")), javaRuntimeBox);
 		runtimePanel.addRow(new JLabel(SharedLocale.tr("options.jvmArguments")), javaArgsBox);
 
-		okButton.setMargin(new Insets(0, 10, 0, 10));
 		buttonsPanel.addGlue();
 		buttonsPanel.addElement(okButton);
 		buttonsPanel.addElement(cancelButton);

@@ -63,9 +63,7 @@ public class AccountSelectDialog extends JDialog {
 
 		//Start Buttons
 		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(26, 13, 13, 13));
-		if (launcher.getConfig().isOfflineEnabled()) {
-			buttonsPanel.addElement(offlineButton);
-		}
+		buttonsPanel.addElement(offlineButton);
 		buttonsPanel.addGlue();
 		buttonsPanel.addElement(cancelButton);
 		buttonsPanel.addElement(loginButton);

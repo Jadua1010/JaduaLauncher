@@ -32,7 +32,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          ./launcher-fancy/build/libs/*.jar
+          ./launcher/build/libs/*.jar
           ./launcher-fancy/build/libs/*.jar
           ./creator-tools/build/libs/*.jar
           ./launcher-bootstrap/build/libs/*.jar

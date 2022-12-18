@@ -8,7 +8,7 @@
 name: Create Release
 
 on:
-  workflow_dispatch:
+  push
 
 jobs:
   build:
@@ -28,3 +28,8 @@ jobs:
         cache: 'gradle'
     - name: Build with Gradle
       run: ./gradlew clean build
+    - name: Upload build artifacts to release
+    - uses: actions/upload-artifact@v3
+      with:
+        name: BuildFiles
+        path: /*/build/libs/*.jar

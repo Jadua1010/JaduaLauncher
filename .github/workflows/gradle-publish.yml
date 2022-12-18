@@ -22,3 +22,17 @@ jobs:
       with:
         name: BuildFiles
         path: ./*/build/libs/*.jar
+    - name: Generate versions
+      uses: HardNorth/github-version-generate@v1.3.0
+      with:
+        version-source: file
+        version-file: build.gradle
+        version-file-extraction-pattern: '(?<=version=).+'
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./*/build/libs/*.jar
+        name: ${{ env.RELEASE_VERSION }}
+        generate_release_notes: true
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

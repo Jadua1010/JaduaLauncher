@@ -7,6 +7,8 @@
 package com.skcraft.launcher.launch;
 
 import com.google.common.base.Function;
+import com.skcraft.launcher.AssetsRoot;
+import com.skcraft.launcher.Configuration;
 import com.skcraft.launcher.Launcher;
 import com.skcraft.launcher.dialog.LauncherFrame;
 import com.skcraft.launcher.dialog.ProcessConsoleFrame;
@@ -17,6 +19,8 @@ import lombok.extern.java.Log;
 import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Handles post-process creation during launch.
@@ -28,6 +32,7 @@ public class LaunchProcessHandler implements Function<Process, ProcessConsoleFra
 
     private final Launcher launcher;
     private ProcessConsoleFrame consoleFrame;
+    private Configuration config;
 
     public LaunchProcessHandler(@NonNull Launcher launcher) {
         this.launcher = launcher;
@@ -36,6 +41,7 @@ public class LaunchProcessHandler implements Function<Process, ProcessConsoleFra
     @Override
     public ProcessConsoleFrame apply(final Process process) {
         log.info("Watching process " + process);
+        config = launcher.getConfig();
 
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
@@ -43,7 +49,9 @@ public class LaunchProcessHandler implements Function<Process, ProcessConsoleFra
                 public void run() {
                     consoleFrame = new ProcessConsoleFrame(CONSOLE_NUM_LINES, true);
                     consoleFrame.setProcess(process);
-                    consoleFrame.setVisible(true);
+                    if (config.isConsoleEnabled()) {
+                        consoleFrame.setVisible(true);
+                    }
                     MessageLog messageLog = consoleFrame.getMessageLog();
                     messageLog.consume(process.getInputStream());
                     messageLog.consume(process.getErrorStream());

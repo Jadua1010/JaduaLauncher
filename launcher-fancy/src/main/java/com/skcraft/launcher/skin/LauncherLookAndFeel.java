@@ -35,7 +35,10 @@ public class LauncherLookAndFeel extends FlatOneDarkIJTheme {
         UIManager.put( "Table.focusCellBackground", new Color(0x444953) );
         UIManager.put( "Table.background", new Color(0x0021242B, true) );
         UIManager.put( "Table.showHorizontalLines", true );
-
-        
+        UIManager.put( "ComboBox.popupInsets", new Insets( 2, 2, 2, 2 ) );
+        UIManager.put( "ComboBox.selectionArc", 100 );
+        UIManager.put( "List.selectionArc", 100 );
+        UIManager.put( "MenuItem.selectionInsets", new Insets( 0, 2, 0, 2 ) );
+        UIManager.put( "MenuItem.selectionArc", 100 );
     }
 }

@@ -1,6 +1,8 @@
 Jadua Studios + SKCraft Launcher
 ================
 
+[![Create Release](https://github.com/Jadua1010/JaduaLauncher/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/Jadua1010/JaduaLauncher/actions/workflows/gradle-publish.yml)
+
 [![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/offbeatwitch/donate)
 
 *If you rely on this software, please consider [donating](https://liberapay.com/offbeatwitch/donate) to help keep it maintained!*

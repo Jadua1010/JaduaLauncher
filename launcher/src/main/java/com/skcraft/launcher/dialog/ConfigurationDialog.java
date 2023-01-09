@@ -44,6 +44,7 @@ public class ConfigurationDialog extends JDialog {
     private final FormPanel gameSettingsPanel = new FormPanel();
     private final JSpinner widthSpinner = new JSpinner();
     private final JSpinner heightSpinner = new JSpinner();
+    private final JCheckBox openConsole = new JCheckBox(SharedLocale.tr("options.openConsole"));
     private final FormPanel proxySettingsPanel = new FormPanel();
     private final JCheckBox useProxyCheck = new JCheckBox(SharedLocale.tr("options.useProxyCheck"));
     private final JTextField proxyHostText = new JTextField();
@@ -97,6 +98,7 @@ public class ConfigurationDialog extends JDialog {
         mapper.map(permGenSpinner, "permGen");
         mapper.map(widthSpinner, "windowWidth");
         mapper.map(heightSpinner, "windowHeight");
+        mapper.map(openConsole, "consoleEnabled");
         mapper.map(useProxyCheck, "proxyEnabled");
         mapper.map(proxyHostText, "proxyHost");
         mapper.map(proxyPortText, "proxyPort");
@@ -118,6 +120,7 @@ public class ConfigurationDialog extends JDialog {
         SwingHelper.removeOpaqueness(javaSettingsPanel);
         tabbedPane.addTab(SharedLocale.tr("options.javaTab"), SwingHelper.alignTabbedPane(javaSettingsPanel));
 
+        gameSettingsPanel.addRow(openConsole);
         gameSettingsPanel.addRow(new JLabel(SharedLocale.tr("options.windowWidth")), widthSpinner);
         gameSettingsPanel.addRow(new JLabel(SharedLocale.tr("options.windowHeight")), heightSpinner);
         SwingHelper.removeOpaqueness(gameSettingsPanel);

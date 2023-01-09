@@ -26,6 +26,7 @@ import java.awt.event.WindowEvent;
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Random;
 
 import static com.skcraft.launcher.util.SharedLocale.tr;
 
@@ -43,6 +44,7 @@ public class ProgressDialog extends JDialog {
     private final LinedBoxPanel buttonsPanel = new LinedBoxPanel(true);
     private final JTextArea logText = new JTextArea();
     private final JScrollPane logScroll = new JScrollPane(logText);
+    private final JLabel funStatus = new JLabel();
     private final JButton detailsButton = new JButton();
     private final JButton logButton = new JButton(SharedLocale.tr("progress.viewLog"));
     private final JButton cancelButton = new JButton(SharedLocale.tr("button.cancel"));
@@ -55,6 +57,12 @@ public class ProgressDialog extends JDialog {
         label.setText(message);
         defaultTitle = title;
         defaultMessage = message;
+        
+        Random objGenerator = new Random();
+        int randomNumber = objGenerator.nextInt(27);
+        funStatus.setText("... " + SharedLocale.tr("funtext." + randomNumber));
+        funStatus.setFont(funStatus.getFont().deriveFont(Font.ITALIC));
+        
         setCompactSize();
         setLocationRelativeTo(owner);
 
@@ -105,6 +113,7 @@ public class ProgressDialog extends JDialog {
         progressPanel.add(label, BorderLayout.NORTH);
         progressPanel.setBorder(BorderFactory.createEmptyBorder(13, 13, 0, 13));
         progressPanel.add(progressBar, BorderLayout.CENTER);
+        progressPanel.add(funStatus, BorderLayout.SOUTH);
         textAreaPanel.setBorder(BorderFactory.createEmptyBorder(10, 13, 0, 13));
         textAreaPanel.add(logScroll, BorderLayout.CENTER);
 
@@ -187,6 +196,23 @@ public class ProgressDialog extends JDialog {
             }
         }, SwingExecutor.INSTANCE);
 
+        final Timer timer2 = new Timer();
+        timer2.scheduleAtFixedRate(new UpdateFunText(dialog, observable), 5000, 5000);
+
+        Futures.addCallback(future, new FutureCallback<Object>() {
+            @Override
+            public void onSuccess(Object result) {
+                timer2.cancel();
+                dialog.dispose();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                timer2.cancel();
+                dialog.dispose();
+            }
+        }, SwingExecutor.INSTANCE);
+        
         dialog.setVisible(true);
     }
 
@@ -242,6 +268,29 @@ public class ProgressDialog extends JDialog {
                     }
                     logText.setText(status);
                     logText.setCaretPosition(0);
+                }
+            });
+        }
+    };
+    
+        private static class UpdateFunText extends TimerTask {
+        private final ProgressDialog dialog;
+        private final ProgressObservable observable;
+
+        public UpdateFunText(ProgressDialog dialog, ProgressObservable observable) {
+            this.dialog = dialog;
+            this.observable = observable;
+        }
+
+        @Override
+        public void run() {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    JLabel funStatus = dialog.funStatus;
+                    Random objGenerator = new Random();
+                    int randomNumber = objGenerator.nextInt(27);
+                    funStatus.setText("... " + SharedLocale.tr("funtext." + randomNumber));
                 }
             });
         }

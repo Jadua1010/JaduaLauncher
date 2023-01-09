@@ -32,6 +32,7 @@ public class Configuration {
     private int windowWidth = 854;
     private int windowHeight = 480;
     private boolean proxyEnabled = false;
+    private boolean consoleEnabled = false;
     private String proxyHost = "localhost";
     private int proxyPort = 8080;
     private String proxyUsername;

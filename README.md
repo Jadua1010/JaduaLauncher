@@ -62,7 +62,7 @@ LiteLoader and Forge installers, or Fabric Loader, go into the *loaders* folder.
 
 ### More Pictures
 
-There's a dark version of the launcher (personally not the creator's cup of tea) that you can use:
+There's a modern version of the launcher (designed by Jadua Studios) that you can use:
 
 ![Skinned](readme/launcher_skinned.png)
 

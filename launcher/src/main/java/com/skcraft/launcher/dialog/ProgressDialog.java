@@ -59,7 +59,7 @@ public class ProgressDialog extends JDialog {
         defaultMessage = message;
         
         Random objGenerator = new Random();
-        int randomNumber = objGenerator.nextInt(27);
+        int randomNumber = objGenerator.nextInt(28);
         funStatus.setText("... " + SharedLocale.tr("funtext." + randomNumber));
         funStatus.setFont(funStatus.getFont().deriveFont(Font.ITALIC));
         
@@ -289,7 +289,7 @@ public class ProgressDialog extends JDialog {
                 public void run() {
                     JLabel funStatus = dialog.funStatus;
                     Random objGenerator = new Random();
-                    int randomNumber = objGenerator.nextInt(27);
+                    int randomNumber = objGenerator.nextInt(28);
                     funStatus.setText("... " + SharedLocale.tr("funtext." + randomNumber));
                 }
             });

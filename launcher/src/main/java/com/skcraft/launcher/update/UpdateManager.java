@@ -25,7 +25,13 @@ import javax.swing.event.SwingPropertyChangeSupport;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UpdateManager {
 
@@ -82,12 +88,40 @@ public class UpdateManager {
                     propertySupport.firePropertyChange("pendingUpdate", true, false);
                     UpdateManager.this.pendingUpdate = null;
 
-                    SwingHelper.showMessageDialog(
-                            window,
-                            SharedLocale.tr("launcher.selfUpdateComplete"),
-                            SharedLocale.tr("launcher.selfUpdateCompleteTitle"),
-                            null,
-                            JOptionPane.INFORMATION_MESSAGE);
+                    int response = JOptionPane.showConfirmDialog(null, SharedLocale.tr("launcher.selfUpdateComplete"), SharedLocale.tr("launcher.selfUpdateCompleteTitle"),
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    switch (response) {
+                        case JOptionPane.NO_OPTION:
+                            break;
+                        case JOptionPane.YES_OPTION:
+                            {
+                            try {
+                                final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "javaw";
+                                final File currentJar = future.get();
+                                
+                                /* is it a jar file? */
+                                if(!currentJar.getName().endsWith(".jar"))
+                                    return;
+                                
+                                /* Build command: java -jar application.jar */
+                                final ArrayList<String> command = new ArrayList<String>();
+                                command.add(javaBin);
+                                command.add("-jar");
+                                command.add(currentJar.getPath());
+                                
+                                final ProcessBuilder builder = new ProcessBuilder(command);
+                                builder.start();
+                                System.exit(0);
+                            } catch (IOException | InterruptedException | ExecutionException ex) {
+                                Logger.getLogger(UpdateManager.class.getName()).log(Level.SEVERE, "Cannot process restart", ex);
+                            }
+                            }
+                            break;
+                        case JOptionPane.CLOSED_OPTION:
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 @Override

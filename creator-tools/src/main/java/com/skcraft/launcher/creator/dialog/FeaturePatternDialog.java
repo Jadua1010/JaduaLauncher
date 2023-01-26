@@ -28,6 +28,7 @@ public class FeaturePatternDialog extends JDialog {
     private final JTextArea descArea = new JTextArea(3, 40);
     private final JComboBox recommendationCombo = new JComboBox(new RecommendationComboBoxModel());
     private final JCheckBox selectedCheck = new JCheckBox("Selected by default");
+    private final JCheckBox independentCheck = new JCheckBox("Independent feature");
     private final JTextArea includeArea = new JTextArea(8, 40);
     private final JTextArea excludeArea = new JTextArea(3, 40);
 
@@ -67,7 +68,8 @@ public class FeaturePatternDialog extends JDialog {
         container.add(new JLabel("Recommendation:"));
         container.add(recommendationCombo, "span");
 
-        container.add(selectedCheck, "span");
+        container.add(selectedCheck);
+        container.add(independentCheck, "span");
 
         container.add(new JLabel("Description:"), "wrap");
         container.add(SwingHelper.wrapScrollPane(descArea), "span");
@@ -126,6 +128,7 @@ public class FeaturePatternDialog extends JDialog {
         SwingHelper.setTextAndResetCaret(descArea, pattern.getFeature().getDescription());
         recommendationCombo.setSelectedItem(pattern.getFeature().getRecommendation());
         selectedCheck.setSelected(pattern.getFeature().isSelected());
+        independentCheck.setSelected(pattern.getFeature().isIndependent());
         SwingHelper.setTextAndResetCaret(includeArea, NEW_LINE_JOINER.join(pattern.getFilePatterns().getInclude()));
         SwingHelper.setTextAndResetCaret(excludeArea, NEW_LINE_JOINER.join(pattern.getFilePatterns().getExclude()));
     }
@@ -135,6 +138,7 @@ public class FeaturePatternDialog extends JDialog {
         pattern.getFeature().setDescription(descArea.getText().trim());
         pattern.getFeature().setRecommendation((Recommendation) recommendationCombo.getSelectedItem());
         pattern.getFeature().setSelected(selectedCheck.isSelected());
+        pattern.getFeature().setIndependent(independentCheck.isSelected());
         pattern.getFilePatterns().setInclude(SwingHelper.linesToList(includeArea.getText()));
         pattern.getFilePatterns().setExclude(SwingHelper.linesToList(excludeArea.getText()));
     }

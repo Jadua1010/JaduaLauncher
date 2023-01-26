@@ -36,20 +36,27 @@ public class Feature implements Comparable<Feature> {
     private String description;
     private Recommendation recommendation;
     private boolean selected;
+    private boolean independent;
 
     public Feature() {
     }
 
-    public Feature(String name, String description, boolean selected) {
+    public Feature(String name, String description, boolean selected, boolean independent) {
         this.name = name;
         this.description = description;
         this.selected = selected;
+        this.independent = independent;
     }
 
     public Feature(Feature feature) {
         setName(feature.getName());
         setDescription(feature.getDescription());
         setSelected(feature.isSelected());
+        setIndependent(feature.isIndependent());
+    }
+    
+    public boolean isIndependent() {
+    return independent;
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.skcraft.launcher.launch.runtime.JavaRuntime;
 import com.skcraft.launcher.launch.runtime.JavaRuntimeFinder;
 import com.skcraft.launcher.persistence.Persistence;
 import com.skcraft.launcher.swing.*;
+import com.skcraft.launcher.update.UpdateManager;
 import com.skcraft.launcher.util.SharedLocale;
 import lombok.NonNull;
 
@@ -23,7 +24,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A dialog to modify configuration options.
@@ -58,6 +65,7 @@ public class ConfigurationDialog extends JDialog {
     private final JButton cancelButton = new JButton(SharedLocale.tr("button.cancel"));
     private final JButton aboutButton = new JButton(SharedLocale.tr("options.about"));
     private final JButton logButton = new JButton(SharedLocale.tr("options.launcherConsole"));
+    private final JCheckBox lightMode = new JCheckBox(SharedLocale.tr("options.lightMode"));
 
     /**
      * Create a new configuration dialog.
@@ -105,6 +113,7 @@ public class ConfigurationDialog extends JDialog {
         mapper.map(proxyUsernameText, "proxyUsername");
         mapper.map(proxyPasswordText, "proxyPassword");
         mapper.map(gameKeyText, "gameKey");
+        mapper.map(lightMode, "lightModeEnabled");
 
         mapper.copyFromObject();
     }
@@ -135,6 +144,9 @@ public class ConfigurationDialog extends JDialog {
         tabbedPane.addTab(SharedLocale.tr("options.proxyTab"), SwingHelper.alignTabbedPane(proxySettingsPanel));
 
         advancedPanel.addRow(new JLabel(SharedLocale.tr("options.gameKey")), gameKeyText);
+        advancedPanel.addRow(Box.createVerticalStrut(15));
+        advancedPanel.addRow(new JLabel(SharedLocale.tr("options.theming")));
+        advancedPanel.addRow(lightMode);
         SwingHelper.removeOpaqueness(advancedPanel);
         tabbedPane.addTab(SharedLocale.tr("options.advancedTab"), SwingHelper.alignTabbedPane(advancedPanel));
 
@@ -171,6 +183,44 @@ public class ConfigurationDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConsoleFrame.showMessages();
+            }
+        });
+        
+        lightMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int response = JOptionPane.showConfirmDialog(null, SharedLocale.tr("options.needsRestart"), SharedLocale.tr("options.needsRestartTitle"),
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    switch (response) {
+                        case JOptionPane.NO_OPTION:
+                            break;
+                        case JOptionPane.YES_OPTION:
+                            save();
+                            String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+                            File currentJar = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+                            
+                            /* is it a jar file? */
+                            if(!currentJar.getName().endsWith(".jar")) {
+                                return;
+                            }
+                            
+                            /* Build command: java -jar application.jar */
+                            StringBuilder cmd = new StringBuilder();
+                            cmd.append("\"").append(javaBin).append("\" ");
+                            cmd.append("-jar ");
+                            cmd.append("\"").append(currentJar.getPath()).append("\" ");
+                            
+                            Runtime.getRuntime().exec(cmd.toString());
+                            System.exit(0);
+                            break;
+                        case JOptionPane.CLOSED_OPTION:
+                            break;
+                        default:
+                            break;
+                    }   } catch (URISyntaxException | IOException ex) {
+                    Logger.getLogger(ConfigurationDialog.class.getName()).log(Level.SEVERE, "Failed To Restart", ex);
+                }
             }
         });
 

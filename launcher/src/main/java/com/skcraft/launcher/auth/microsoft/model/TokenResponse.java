@@ -9,6 +9,7 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenResponse {
+        private String status;
 	private String tokenType;
 	private String accessToken;
 	private String refreshToken;

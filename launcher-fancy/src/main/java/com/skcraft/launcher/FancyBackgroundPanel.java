@@ -10,16 +10,28 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import lombok.NonNull;
 
 public class FancyBackgroundPanel extends JPanel {
 
-    private Image background;
+    public Image background;
+    private Configuration config;
 
-    public FancyBackgroundPanel() {
-        try {
-            background = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("launcher_bg.jpg"));
-        } catch (IOException e) {
-            background = null;
+    public FancyBackgroundPanel(Launcher launcher) {
+        config = launcher.getConfig();
+        if (config.isLightModeEnabled()) {
+            try {
+                background = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("launcher_bg2.jpg"));
+            } catch (IOException e) {
+                background = null;
+        }
+        }
+        else {
+            try {
+                background = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("launcher_bg.jpg"));
+            } catch (IOException e) {
+                background = null;
+            }
         }
     }
 

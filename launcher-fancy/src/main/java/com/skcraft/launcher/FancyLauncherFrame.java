@@ -34,7 +34,7 @@ public class FancyLauncherFrame extends LauncherFrame {
 
     @Override
     protected JPanel createContainerPanel() {
-        return new FancyBackgroundPanel();
+        return new FancyBackgroundPanel(launcher);
     }
 
     @Override

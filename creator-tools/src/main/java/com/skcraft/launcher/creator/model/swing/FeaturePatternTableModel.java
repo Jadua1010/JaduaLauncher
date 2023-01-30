@@ -27,7 +27,7 @@ public class FeaturePatternTableModel extends AbstractTableModel {
             case 1:
                 return "Recommendation";
             case 2:
-                return "Default?";
+                return "Default";
             default:
                 return null;
         }

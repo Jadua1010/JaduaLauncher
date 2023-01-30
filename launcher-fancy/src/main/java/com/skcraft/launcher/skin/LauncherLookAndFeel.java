@@ -5,18 +5,21 @@
  */
 
 package com.skcraft.launcher.skin;
-import com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme;
+import com.skcraft.launcher.themes.DarkTheme;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import com.skcraft.launcher.dialog.LauncherFrame;
 
-public class LauncherLookAndFeel extends FlatOneDarkIJTheme {
+public class LauncherLookAndFeel {
 
-    public LauncherLookAndFeel() {
-        FlatOneDarkIJTheme.registerCustomDefaultsSource("com.skcraft.launcher.skin");
-        FlatOneDarkIJTheme.setup();
-        
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(new DarkTheme());
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
+
         UIManager.put( "Button.arc", 100 );
         UIManager.put( "Component.arc", 100 );
         UIManager.put( "ProgressBar.arc", 100 );

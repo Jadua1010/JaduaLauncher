@@ -39,6 +39,7 @@ public class FancyBackgroundPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (background != null) {
+            Graphics2D g2d = (Graphics2D) g;
             double multi;
             int w, h;
 
@@ -66,8 +67,12 @@ public class FancyBackgroundPanel extends JPanel {
                 w = (int) Math.floor((float)background.getWidth(null) * multi);
                 h = (int) Math.floor((float)background.getHeight(null) * multi);
             }
-
-            g.drawImage(background, 0, 0, w, h,null);
+            
+            RenderingHints rh = new RenderingHints(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.setRenderingHints(rh);
+            
+            g2d.drawImage(background, 0, 0, w, h, null);
         }
     }
 }

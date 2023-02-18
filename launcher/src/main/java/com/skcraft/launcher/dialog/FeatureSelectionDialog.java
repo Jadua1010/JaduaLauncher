@@ -38,10 +38,10 @@ public class FeatureSelectionDialog extends JDialog {
     private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPaneSmall, descScroll);
     private final LinedBoxPanel buttonsPanel = new LinedBoxPanel(true);
     private final JButton installButton = new JButton(SharedLocale.tr("features.install"));
-    List<Integer> independantFeaturesIndex = new ArrayList<>();
-    List<Integer> nonIndependantFeaturesIndex = new ArrayList<>();
-    List<Feature> independantFeatures = new ArrayList<>();
-    List<Feature> nonIndependantFeatures = new ArrayList<>();
+    List<Integer> independentFeaturesIndex = new ArrayList<>();
+    List<Integer> nonIndependentFeaturesIndex = new ArrayList<>();
+    List<Feature> independentFeatures = new ArrayList<>();
+    List<Feature> nonIndependentFeatures = new ArrayList<>();
     boolean isUpdating = false;
     private final Object receiver;
 
@@ -62,23 +62,23 @@ public class FeatureSelectionDialog extends JDialog {
     public void initComponents() {
         for (Feature feature : features) {
             if (feature.isIndependent()) {
-                independantFeatures.add(feature); 
+                independentFeatures.add(feature); 
             } else {
-                nonIndependantFeatures.add(feature);
+                nonIndependentFeatures.add(feature);
             }
         }
 
         for (int i = 0; i < features.size(); i++) {
             Feature feature = features.get(i);
             if (feature.isIndependent()) {
-                independantFeaturesIndex.add(i);
+                independentFeaturesIndex.add(i);
             } else {
-                nonIndependantFeaturesIndex.add(i);
+                nonIndependentFeaturesIndex.add(i);
             }
         }
 
-        componentsTable.setModel(new FeatureTableModel(nonIndependantFeatures));
-        componentsIndependent.setModel(new FeatureTableModel(independantFeatures));
+        componentsTable.setModel(new FeatureTableModel(nonIndependentFeatures));
+        componentsIndependent.setModel(new FeatureTableModel(independentFeatures));
         TableColumnModel columnModel = componentsIndependent.getColumnModel();
         TableColumn column = columnModel.getColumn(1);
         column.setHeaderValue(SharedLocale.tr("features.independentColumn"));
@@ -133,14 +133,14 @@ public class FeatureSelectionDialog extends JDialog {
                     if (selectedRow != -1) {
                         for (int i = 0; i < componentsIndependent.getRowCount(); i++) {
                             if ((Boolean) componentsIndependent.getValueAt(i, 0) == true) {
-                                int originalIndex = independantFeaturesIndex.get(i);
+                                int originalIndex = independentFeaturesIndex.get(i);
                                 Feature f = features.get(originalIndex);
                                 f.setSelected(false);
                                 componentsIndependent.setValueAt(false, i, 0);
                             }
                         }
                     }
-                    int originalIndex = independantFeaturesIndex.get(selectedRow);
+                    int originalIndex = independentFeaturesIndex.get(selectedRow);
                     Feature f = features.get(originalIndex);
                     f.setSelected(true);
                     componentsIndependent.setValueAt(true, selectedRow, 0);
@@ -167,7 +167,7 @@ public class FeatureSelectionDialog extends JDialog {
         int selectedRow = componentsTable.getSelectedRow();
         // check which list the selected row belongs to
 
-        int originalIndex = nonIndependantFeaturesIndex.get(selectedRow);
+        int originalIndex = nonIndependentFeaturesIndex.get(selectedRow);
 
         if (features.get(originalIndex) != null) {
             descText.setText(features.get(originalIndex).getDescription());
@@ -180,7 +180,7 @@ public class FeatureSelectionDialog extends JDialog {
         int selectedRow = componentsIndependent.getSelectedRow();
         // check which list the selected row belongs to
 
-        int originalIndex = independantFeaturesIndex.get(selectedRow);
+        int originalIndex = independentFeaturesIndex.get(selectedRow);
 
         if (features.get(originalIndex) != null) {
             descText.setText(features.get(originalIndex).getDescription());

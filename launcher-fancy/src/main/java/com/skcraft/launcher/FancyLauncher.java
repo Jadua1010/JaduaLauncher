@@ -68,6 +68,10 @@ public class FancyLauncher {
                             UIManager.put("SplitPane.background", new Color(0xE4E7EE));
                             UIManager.put("Button.foreground", new Color (0xffffff));
                             UIManager.put("Button.background", new Color (0x2979FF));
+                            UIManager.put("Button.default.background", new Color (0x94BD8D));
+                            UIManager.put("Button.default.focusedBackground", new Color (0xA2E497));
+                            UIManager.put("Button.default.hoverBackground", new Color (0xA2E497));
+                            UIManager.put("Button.default.pressedBackground", new Color (0x94BD8D));
                             UIManager.put( "Table.background", new Color(0x002979FF, true));
                             UIManager.put( "Table.foreground", new Color(0x000));
                             UIManager.put( "Table.selectionBackground", new Color(0x302979FF, true));
@@ -103,6 +107,7 @@ public class FancyLauncher {
                     UIManager.put( "Component.arrowType", "chevron" );
                     UIManager.put( "ScrollBar.thumbArc", 999 );
                     UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
+                    UIManager.put("Button.default.boldText", true);
 
                     //if (!SwingHelper.setLookAndFeel("com.skcraft.launcher.skin.LauncherLookAndFeel")) {
                     //    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

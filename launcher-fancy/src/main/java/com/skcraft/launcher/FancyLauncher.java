@@ -12,6 +12,7 @@ import lombok.extern.java.Log;
 import com.skcraft.launcher.dialog.LauncherFrame;
 import com.skcraft.launcher.themes.DarkTheme;
 import com.skcraft.launcher.Configuration;
+import com.skcraft.launcher.popups.Notification;
 import com.skcraft.launcher.themes.LightTheme;
 
 import javax.swing.*;
@@ -115,6 +116,7 @@ public class FancyLauncher {
 
                     launcher.setMainWindowSupplier(new CustomWindowSupplier(launcher));
                     launcher.showLauncherWindow();
+                    
                 } catch (Throwable t) {
                     log.log(Level.WARNING, "Load failure", t);
                     SwingHelper.showErrorDialog(null, "Uh oh! The updater couldn't be opened because a " +

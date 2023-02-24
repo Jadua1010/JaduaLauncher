@@ -17,6 +17,7 @@ import com.skcraft.launcher.launch.LaunchOptions.UpdatePolicy;
 import com.skcraft.launcher.swing.*;
 import com.skcraft.launcher.util.SharedLocale;
 import com.skcraft.launcher.util.SwingExecutor;
+import com.skcraft.launcher.popups.Notification;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.java.Log;
@@ -36,6 +37,8 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 
 import static com.skcraft.launcher.util.SharedLocale.tr;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The main launcher frame.
@@ -57,6 +60,7 @@ public class LauncherFrame extends JFrame {
     private final JButton optionsButton = new JButton(SharedLocale.tr("launcher.options"));
     private final JButton selfUpdateButton = new JButton(SharedLocale.tr("launcher.updateLauncher"));
     private final JCheckBox updateCheck = new JCheckBox(SharedLocale.tr("launcher.downloadUpdates"));
+    public static LauncherFrame currentInstance;
 
     /**
      * Create a new frame.
@@ -68,6 +72,7 @@ public class LauncherFrame extends JFrame {
 
         this.launcher = launcher;
         instancesModel = new InstanceTableModel(launcher.getInstances());
+        currentInstance = this;
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(400, 300));
@@ -106,7 +111,14 @@ public class LauncherFrame extends JFrame {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("pendingUpdate")) {
                     selfUpdateButton.setVisible((Boolean) evt.getNewValue());
-
+                    LauncherFrame window = LauncherFrame.currentInstance;
+                    Notification panel;
+                    try {
+                        panel = new Notification(window, Notification.Type.WARNING, Notification.Location.TOP_CENTER, "The launcher requires an update");
+                        panel.showNotification();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LauncherFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }    
                 }
             }
         });
@@ -296,8 +308,10 @@ public class LauncherFrame extends JFrame {
             }
 
             popup.addSeparator();
+            
         }
 
+        
         menuItem = new JMenuItem(SharedLocale.tr("launcher.refreshList"));
         menuItem.addActionListener(new ActionListener() {
             @Override
@@ -310,6 +324,7 @@ public class LauncherFrame extends JFrame {
         popup.show(component, x, y);
 
     }
+    
 
     private void confirmDelete(Instance instance) {
         if (!SwingHelper.confirmDialog(this,

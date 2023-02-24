@@ -27,6 +27,7 @@ public class BuilderConfigDialog extends JDialog {
     private final JTextField nameText = new JTextField(20);
     private final JTextField titleText = new JTextField(30);
     private final JTextField gameVersionText = new JTextField(10);
+    private final JTextField changeLogText = new JTextField(30);
     private final JTextArea launchFlagsArea = new JTextArea(10, 40);
     private final JTextArea userFilesIncludeArea = new JTextArea(15, 40);
     private final JTextArea userFilesExcludeArea = new JTextArea(8, 40);
@@ -121,6 +122,9 @@ public class BuilderConfigDialog extends JDialog {
 
         container.add(new JLabel("Game Version:"));
         container.add(gameVersionText, "span");
+        
+        container.add(new JLabel("Changelog:"));
+        container.add(changeLogText, "span");
 
         return container;
     }
@@ -202,6 +206,7 @@ public class BuilderConfigDialog extends JDialog {
         SwingHelper.setTextAndResetCaret(nameText, config.getName());
         SwingHelper.setTextAndResetCaret(titleText, config.getTitle());
         SwingHelper.setTextAndResetCaret(gameVersionText, config.getGameVersion());
+        SwingHelper.setTextAndResetCaret(changeLogText, config.getChangeLog());
         SwingHelper.setTextAndResetCaret(launchFlagsArea, SwingHelper.listToLines(config.getLaunchModifier().getFlags()));
         SwingHelper.setTextAndResetCaret(userFilesIncludeArea, SwingHelper.listToLines(config.getUserFiles().getInclude()));
         SwingHelper.setTextAndResetCaret(userFilesExcludeArea, SwingHelper.listToLines(config.getUserFiles().getExclude()));
@@ -213,6 +218,7 @@ public class BuilderConfigDialog extends JDialog {
         config.setName(nameText.getText().trim());
         config.setTitle(Strings.emptyToNull(titleText.getText().trim()));
         config.setGameVersion(gameVersionText.getText().trim());
+        config.setChangeLog(changeLogText.getText().trim());
 
         LaunchModifier launchModifier = config.getLaunchModifier();
         FnPatternList userFiles = config.getUserFiles();

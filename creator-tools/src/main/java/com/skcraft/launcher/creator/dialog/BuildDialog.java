@@ -6,6 +6,7 @@
 
 package com.skcraft.launcher.creator.dialog;
 
+import com.skcraft.launcher.builder.BuilderConfig;
 import com.skcraft.launcher.swing.DirectoryField;
 import com.skcraft.launcher.swing.SwingHelper;
 import com.skcraft.launcher.swing.TextFieldPopupMenu;
@@ -23,12 +24,16 @@ public class BuildDialog extends JDialog {
     private final DirectoryField destDirField = new DirectoryField();
     private final JTextField versionText = new JTextField(20);
     private final JTextField manifestFilenameText = new JTextField(30);
+    private final JTextField changeLogText = new JTextField(30);
     @Getter
     private BuildOptions options;
+    private final BuilderConfig config;
 
-    public BuildDialog(Window parent) {
+    public BuildDialog(Window parent, BuilderConfig config) {
         super(parent, "Build Release", ModalityType.DOCUMENT_MODAL);
-
+        
+        this.config = config;
+        
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         initComponents();
         setResizable(false);
@@ -48,6 +53,9 @@ public class BuildDialog extends JDialog {
 
         container.add(new JLabel("Manifest Filename:"));
         container.add(manifestFilenameText, "span");
+        
+        container.add(new JLabel("Changelog:"));
+        container.add(changeLogText, "span");
 
         container.add(new JLabel("Output Directory:"));
         container.add(destDirField, "span");
@@ -70,6 +78,7 @@ public class BuildDialog extends JDialog {
     private void returnValue() {
         String version = versionText.getText().trim();
         String manifestFilename = manifestFilenameText.getText().trim();
+        config.setChangeLog(changeLogText.getText().trim());
 
         if (version.isEmpty()) {
             SwingHelper.showErrorDialog(this, "A version string must be entered.", "Error");
@@ -90,11 +99,12 @@ public class BuildDialog extends JDialog {
         dispose();
     }
 
-    public static BuildOptions showBuildDialog(Window parent, String version, String manifestName, File destDir) {
-        BuildDialog dialog = new BuildDialog(parent);
+    public static BuildOptions showBuildDialog(Window parent, String version, String manifestName, File destDir, BuilderConfig config) {
+        BuildDialog dialog = new BuildDialog(parent, config);
         dialog.versionText.setText(version);
         dialog.manifestFilenameText.setText(manifestName);
         dialog.destDirField.setPath(destDir.getAbsolutePath());
+        dialog.changeLogText.setText(config.getChangeLog());
         dialog.setVisible(true);
         return dialog.getOptions();
     }

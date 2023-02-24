@@ -28,7 +28,8 @@ public class Instance implements Comparable<Instance> {
     private String title;
     private String name;
     private String version;
-    private boolean updatePending;
+    private String changeLog;
+    boolean updatePending;
     private boolean installed;
     private Date lastAccessed;
     @JsonProperty("launch")
@@ -40,6 +41,7 @@ public class Instance implements Comparable<Instance> {
     @JsonIgnore private int priority;
     @JsonIgnore private boolean selected;
     @JsonIgnore private boolean local;
+    @JsonIgnore private boolean wasLocal;
 
     /**
      * Get the tile of the instance, which might be the same as the
@@ -50,7 +52,7 @@ public class Instance implements Comparable<Instance> {
     public String getTitle() {
         return title != null ? title : name;
     }
-
+    
     /**
      * Update the given process builder with launch settings that are
      * specific to this instance.

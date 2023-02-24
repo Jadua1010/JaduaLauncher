@@ -92,6 +92,12 @@ public class Manifest extends BaseManifest {
             setGameVersion(gameVersion);
         }
     }
+    
+    public void updateChangeLog(String changeLog) {
+        if (changeLog != null) {
+            setChangeLog(changeLog);
+        }
+    }
 
     public void update(Instance instance) {
         instance.setLaunchModifier(getLaunchModifier());

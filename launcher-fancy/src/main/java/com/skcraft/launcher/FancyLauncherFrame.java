@@ -31,7 +31,7 @@ public class FancyLauncherFrame extends LauncherFrame {
         SwingHelper.removeOpaqueness(getInstanceScroll());
         getInstanceScroll().setBorder(BorderFactory.createEmptyBorder());
     }
-
+    
     @Override
     protected JPanel createContainerPanel() {
         return new FancyBackgroundPanel(launcher);

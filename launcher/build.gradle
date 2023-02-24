@@ -24,6 +24,7 @@ dependencies {
     implementation 'net.java.dev.jna:jna-platform:5.11.0'
     implementation 'com.formdev:flatlaf:3.0'
     implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'net.java.dev.timingframework:timingframework:1.0'
 }
 
 processResources {

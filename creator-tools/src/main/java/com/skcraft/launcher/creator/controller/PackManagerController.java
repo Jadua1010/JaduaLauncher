@@ -812,8 +812,9 @@ public class PackManagerController {
 
     private void buildPack(Pack pack) {
         String initialVersion = generateVersionFromDate();
-        BuildOptions options = BuildDialog.showBuildDialog(frame, initialVersion, generateManifestName(pack), distDir);
-
+        File file = pack.getConfigFile();
+        BuilderConfig config = Persistence.read(file, BuilderConfig.class);
+        BuildOptions options = BuildDialog.showBuildDialog(frame, initialVersion, generateManifestName(pack), distDir, config);
         if (options != null) {
             ConsoleFrame.showMessages();
             PackBuilder builder = new PackBuilder(pack, options.getDestDir(), options.getVersion(), options.getManifestFilename(), false, true);
@@ -824,6 +825,7 @@ public class PackManagerController {
                     }, ex -> {}, SwingExecutor.INSTANCE);
             ProgressDialog.showProgress(frame, deferred, builder, "Building modpack...", "Building modpack...");
             SwingHelper.addErrorDialogCallback(frame, deferred);
+            writeBuilderConfig(pack, config);
         }
     }
 

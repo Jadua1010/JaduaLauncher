@@ -28,6 +28,11 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import static com.skcraft.launcher.LauncherUtils.concat;
+import com.skcraft.launcher.dialog.LauncherFrame;
+import com.skcraft.launcher.model.modpack.Manifest;
+import com.skcraft.launcher.popups.Notification;
+import java.util.concurrent.CompletableFuture;
+import javax.swing.JFrame;
 
 /**
  * Stores the list of instances.
@@ -156,14 +161,25 @@ public class InstanceList {
                             URL url = concat(packagesURL, manifest.getLocation());
                             instance.setManifestURL(url);
 
-                            log.info("(" + instance.getName() + ").setManifestURL(" + url + ")");
+                            log.info("(" + instance.getName() + ").setManifestURL(" + url + ")" + manifest.getVersion());
+                            instance.setWasLocal(true);
 
+                            Manifest newManifest = HttpRequest
+                                .get(instance.getManifestURL())
+                                .execute()
+                                .expectResponseCode(200)
+                                .returnContent()
+                                .saveContent(instance.getManifestPath())
+                                .asJson(Manifest.class);
+                            
+                            instance.setChangeLog(newManifest.getChangeLog());
+                            
                             // Check if an update is required
-                            if (instance.getVersion() == null || !instance.getVersion().equals(manifest.getVersion())) {
+                            if (instance.getVersion() == null || !instance.getVersion().equals(newManifest.getVersion())) {
                                 instance.setUpdatePending(true);
-                                instance.setVersion(manifest.getVersion());
+                                instance.setVersion(newManifest.getVersion());
                                 Persistence.commitAndForget(instance);
-                                log.info(instance.getName() + " requires an update to " + manifest.getVersion());
+                                log.info("A version needs an update");
                             }
                         }
                     }
@@ -177,6 +193,7 @@ public class InstanceList {
                         instance.setName(manifest.getName());
                         instance.setVersion(manifest.getVersion());
                         instance.setPriority(manifest.getPriority());
+                        instance.setChangeLog(manifest.getChangeLog());
                         instance.setSelected(false);
                         instance.setManifestURL(concat(packagesURL, manifest.getLocation()));
                         instance.setUpdatePending(true);
@@ -198,7 +215,19 @@ public class InstanceList {
                     log.info(instances.size() + " instance(s) enumerated.");
                 }
             }
-
+            
+            for (Instance instance : instances) {
+                if (instance.isWasLocal() == true) {
+                    if (instance.getChangeLog() != null) {
+                        String title = (instance.getTitle() + " Update");
+                        log.info(instance.getChangeLog());
+                        LauncherFrame window = LauncherFrame.currentInstance;
+                        Notification panel = new Notification(window, Notification.Type.UPDATE, Notification.Location.TOP_CENTER, instance.getChangeLog(), title);
+                        panel.showNotification();
+                    }
+                }
+            }
+            
             return InstanceList.this;
         }
 

@@ -494,7 +494,8 @@ public class PackManagerController {
         });
 
         frame.getOptionsMenuItem().addActionListener(e -> {
-            ConfigurationDialog configDialog = new ConfigurationDialog(frame, launcher);
+            LauncherFrame window = LauncherFrame.currentInstance;
+            ConfigurationDialog configDialog = new ConfigurationDialog(frame, launcher, window);
             configDialog.setVisible(true);
         });
 

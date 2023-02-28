@@ -217,7 +217,7 @@ public class InstanceList {
             }
             
             for (Instance instance : instances) {
-                if (instance.isWasLocal() == true) {
+                if (instance.isWasLocal() && instance.isUpdatePending() == true) {
                     if (instance.getChangeLog() != null) {
                         String title = (instance.getTitle() + " Update");
                         log.info(instance.getChangeLog());

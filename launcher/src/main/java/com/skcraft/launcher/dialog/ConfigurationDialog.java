@@ -13,6 +13,7 @@ import com.skcraft.launcher.launch.runtime.AddJavaRuntime;
 import com.skcraft.launcher.launch.runtime.JavaRuntime;
 import com.skcraft.launcher.launch.runtime.JavaRuntimeFinder;
 import com.skcraft.launcher.persistence.Persistence;
+import com.skcraft.launcher.popups.Notification;
 import com.skcraft.launcher.swing.*;
 import com.skcraft.launcher.update.UpdateManager;
 import com.skcraft.launcher.util.SharedLocale;
@@ -72,8 +73,9 @@ public class ConfigurationDialog extends JDialog {
      *
      * @param owner the window owner
      * @param launcher the launcher
+     * @param window the window itself
      */
-    public ConfigurationDialog(Window owner, @NonNull Launcher launcher) {
+    public ConfigurationDialog(Window owner, @NonNull Launcher launcher, LauncherFrame window) {
         super(owner, ModalityType.DOCUMENT_MODAL);
 
         this.config = launcher.getConfig();
@@ -175,6 +177,14 @@ public class ConfigurationDialog extends JDialog {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Notification panel;
+                LauncherFrame window = LauncherFrame.currentInstance;
+                try {
+                    panel = new Notification(window, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Settings have been saved");
+                    panel.showNotification();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LauncherFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 save();
             }
         });

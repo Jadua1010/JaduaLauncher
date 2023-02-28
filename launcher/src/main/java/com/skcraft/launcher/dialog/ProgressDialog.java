@@ -197,7 +197,7 @@ public class ProgressDialog extends JDialog {
         }, SwingExecutor.INSTANCE);
 
         final Timer timer2 = new Timer();
-        timer2.scheduleAtFixedRate(new UpdateFunText(dialog, observable), 5000, 5000);
+        timer2.scheduleAtFixedRate(new UpdateFunText(dialog, observable), 8000, 8000);
 
         Futures.addCallback(future, new FutureCallback<Object>() {
             @Override

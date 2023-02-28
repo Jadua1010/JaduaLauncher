@@ -263,6 +263,14 @@ public class LauncherFrame extends JFrame {
                         File dir = selected.getContentDir();
                         dir.mkdirs();
                         SwingHelper.setClipboard(dir.getAbsolutePath());
+                        LauncherFrame window = LauncherFrame.currentInstance;
+                        Notification panel;
+                        try {
+                            panel = new Notification(window, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Path copied to clipboard");
+                            panel.showNotification();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(LauncherFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
                 popup.add(menuItem);
@@ -379,7 +387,8 @@ public class LauncherFrame extends JFrame {
     }
 
     private void showOptions() {
-        ConfigurationDialog configDialog = new ConfigurationDialog(this, launcher);
+        LauncherFrame window = LauncherFrame.currentInstance;
+        ConfigurationDialog configDialog = new ConfigurationDialog(this, launcher, window);
         configDialog.setVisible(true);
     }
 

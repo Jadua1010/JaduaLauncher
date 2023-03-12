@@ -189,7 +189,9 @@ public class Notification extends javax.swing.JComponent {
             showing = true;
             animator.start();
         }
-        onscreen = onscreen - 1;
+        if (onscreen > 0) {
+            onscreen = onscreen - 1;
+        }
     }
 
     private void sleep() {

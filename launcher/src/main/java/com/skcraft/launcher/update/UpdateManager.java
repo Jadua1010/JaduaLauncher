@@ -56,7 +56,7 @@ public class UpdateManager {
         return pendingUpdate != null;
     }
 
-    public void checkForUpdate() {
+    public void checkForUpdate(final Window window) {
         ListenableFuture<LatestVersionInfo> future = launcher.getExecutor().submit(new UpdateChecker(launcher));
 
         Futures.addCallback(future, new FutureCallback<LatestVersionInfo>() {
@@ -69,9 +69,11 @@ public class UpdateManager {
 
             @Override
             public void onFailure(Throwable t) {
-
+                // Error handler attached below.
             }
         }, SwingExecutor.INSTANCE);
+
+        SwingHelper.addErrorDialogCallback(window, future);
     }
 
     public void performUpdate(final Window window) {

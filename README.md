@@ -1,11 +1,7 @@
 Jadua Studios + SKCraft Launcher
 ================
 
-[![Create Release](https://github.com/Jadua1010/JaduaLauncher/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/Jadua1010/JaduaLauncher/actions/workflows/gradle-publish.yml)
-
-[![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/offbeatwitch/donate)
-
-*If you rely on this software, please consider [donating](https://liberapay.com/offbeatwitch/donate) to help keep it maintained!*
+[![Create Release](https://github.com/Jadua1010/JaduaLauncher/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/Jadua1010/JaduaLauncher/actions/workflows/gradle-publish.yml) [![CodeFactor](https://www.codefactor.io/repository/github/jadua1010/jadualauncher/badge/master)](https://www.codefactor.io/repository/github/jadua1010/jadualauncher/overview/master)
 
 Need to make it easy for people to install and play your modpack? The SKCraft Launcher platform may be for you if:
 
